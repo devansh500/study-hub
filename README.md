@@ -1,1 +1,107 @@
-# study-hub
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanishka's Study Hub</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%237C3AED' d='M12 2l10 9H2l10-9zm0 2.618L4.738 10h14.524L12 4.618zM2 12h20v10H2V12zm2 2v6h16v-6H4z'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light-mode">
+    <div id="sidebar" class="sidebar">
+        <h2>Menu</h2>
+        <a href="#tasks" onclick="StudyHub.navigate('tasks')">Tasks</a>
+        <a href="#resources" onclick="StudyHub.navigate('resources')">Resources</a>
+        <a href="#timer" onclick="StudyHub.navigate('timer')">Timer</a>
+        <a href="#goals" onclick="StudyHub.navigate('goals')">Goals</a>
+        <a href="#quotes" onclick="StudyHub.navigate('quotes')">Quotes</a>
+    </div>
+    <i class="fas fa-bars sidebar-toggle" onclick="StudyHub.toggleSidebar()" aria-label="Toggle sidebar"></i>
+
+    <div class="container">
+        <header>
+            <div class="hero">
+                <h1 aria-label="Tanishka's Study Hub">Tanishka’s Study Hub</h1>
+                <p>Your premium study companion</p>
+            </div>
+            <div id="timerModal" class="modal timer-modal hidden" role="dialog" aria-label="Timer notification">
+                <p id="timerMessage"></p>
+                <button onclick="StudyHub.hideTimerModal()" class="btn btn-blue text-xs" aria-label="Close timer notification">OK</button>
+            </div>
+        </header>
+
+        <main class="grid">
+            <section id="tasks" class="card">
+                <h2>Task Manager</h2>
+                <input id="taskInput" class="input" placeholder="Add a new task" onkeydown="if(event.key === 'Enter') StudyHub.addTask()">
+                <input id="dueDate" type="date" class="input">
+                <select id="category" class="input">
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="School">School</option>
+                    <option value="Other">Other</option>
+                </select>
+                <button class="btn btn-blue" onclick="StudyHub.addTask()">Add Task</button>
+                <div class="flex gap-2 mt-2">
+                    <button class="btn btn-red text-xs" onclick="StudyHub.clearAllTasks()">Clear All</button>
+                    <button class="btn btn-green text-xs" onclick="StudyHub.filterTasks('all')">All</button>
+                    <button class="btn btn-green text-xs" onclick="StudyHub.filterTasks('pending')">Pending</button>
+                    <button class="btn btn-green text-xs" onclick="StudyHub.filterTasks('completed')">Completed</button>
+                    <button class="btn btn-blue text-xs" onclick="StudyHub.sortTasksByDueDate()">Sort by Due Date</button>
+                </div>
+                <ul id="taskList"></ul>
+            </section>
+
+            <section id="resources" class="card">
+                <h2>Study Resources</h2>
+                <ul>
+                    <li><a href="https://www.khanacademy.org" target="_blank" rel="noopener noreferrer">Khan Academy</a></li>
+                    <li><a href="https://www.coursera.org" target="_blank" rel="noopener noreferrer">Coursera</a></li>
+                    <li><a href="https://www.w3schools.com" target="_blank" rel="noopener noreferrer">W3Schools</a></li>
+                    <li><a href="https://openstax.org" target="_blank" rel="noopener noreferrer">OpenStax</a></li>
+                </ul>
+            </section>
+
+            <section id="timer" class="card">
+                <h2>Pomodoro Timer</h2>
+                <p id="timer">25:00</p>
+                <div class="progress-bar"><div id="progressBarFill"></div></div>
+                <div class="flex gap-2">
+                    <button class="btn btn-blue" onclick="StudyHub.startTimer()">Start</button>
+                    <button class="btn btn-red" onclick="StudyHub.resetTimer()">Reset</button>
+                    <button class="btn btn-green" onclick="StudyHub.setTimer(25)">Work (25)</button>
+                    <button class="btn btn-green" onclick="StudyHub.setTimer(5)">Break (5)</button>
+                </div>
+                <p>Sessions completed: <span id="sessionCount">0</span></p>
+                <button class="btn btn-blue mt-2" onclick="StudyHub.downloadLog()">Download Log</button>
+            </section>
+
+            <section id="goals" class="card">
+                <h2>Daily Goals</h2>
+                <input id="goalInput" class="input" placeholder="Add a new goal" onkeydown="if(event.key === 'Enter') StudyHub.addGoal()">
+                <button class="btn btn-blue" onclick="StudyHub.addGoal()">Add Goal</button>
+                <button class="btn btn-red text-xs mt-2" onclick="StudyHub.clearAllGoals()">Clear All</button>
+                <ul id="goalList"></ul>
+            </section>
+
+            <section id="quotes" class="card">
+                <h2>Motivational Quotes</h2>
+                <p id="quote">Click for inspiration!</p>
+                <button class="btn btn-blue mt-2" onclick="StudyHub.newQuote()">New Quote</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Made with 💜 for Tanishka by devansh (his.....) to conquer her studies!</p>
+            <button class="btn btn-blue mt-2" onclick="StudyHub.toggleTheme()">
+                <i id="themeIcon" class="fas fa-moon"></i> Toggle Theme
+            </button>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
